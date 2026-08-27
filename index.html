@@ -30,22 +30,16 @@
       margin-bottom: 32px;
     }
 
-    p {
-      margin-bottom: 16px;
-    }
+    p { margin-bottom: 16px; }
 
     a {
       color: #111;
       text-decoration: underline;
       text-underline-offset: 2px;
     }
-
     a:hover { color: #555; }
 
-    /* Section */
-    .section {
-      margin-top: 44px;
-    }
+    .section { margin-top: 44px; }
 
     .section-label {
       font-size: 0.75rem;
@@ -56,23 +50,15 @@
       margin-bottom: 16px;
     }
 
-    /* Paper / PDF entry */
-    .entry {
-      margin-bottom: 24px;
-    }
+    .entry { margin-bottom: 24px; }
 
     .entry-title {
       font-weight: 500;
       margin-bottom: 2px;
     }
 
-    .entry-title a {
-      text-decoration: none;
-    }
-
-    .entry-title a:hover {
-      text-decoration: underline;
-    }
+    .entry-title a { text-decoration: none; }
+    .entry-title a:hover { text-decoration: underline; }
 
     .entry-meta {
       font-size: 0.875rem;
@@ -95,73 +81,162 @@
       margin-left: 6px;
       font-weight: 500;
       vertical-align: middle;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
       text-decoration: none;
     }
+    .tag:hover { background: #e8e8e8; color: #333; }
 
-    .tag:hover {
-      background: #e8e8e8;
-      color: #333;
+    .contact-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .contact-links a { font-size: 0.9rem; }
+
+    /* ── PDF Modal ── */
+    .pdf-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
     }
+    .pdf-overlay.open { display: flex; }
 
-    /* Contact row */
-    .contact-links {
+    .pdf-modal {
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      width: min(860px, 94vw);
+      height: 90vh;
       display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
     }
 
-    .contact-links a {
-      font-size: 0.9rem;
+    .pdf-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid #eee;
+      flex-shrink: 0;
+    }
+
+    .pdf-toolbar-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #111;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 60%;
+    }
+
+    .pdf-toolbar-actions { display: flex; gap: 10px; align-items: center; }
+
+    .pdf-btn {
+      font-size: 0.8rem;
+      font-family: inherit;
+      padding: 5px 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #111;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .pdf-btn:hover { background: #f5f5f5; color: #111; }
+    .pdf-btn.close-btn { border-color: transparent; font-size: 1.1rem; padding: 4px 8px; }
+
+    .pdf-frame {
+      flex: 1;
+      width: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
 
   <h1>Destin Niyomufasha</h1>
-  <div class="subtitle">Dartmouth College, Class of 2026</div>
 
-  <p>
-    I'm a student interested in mathematics and algorithms —
-    the places where clean mathematical structure leads to elegant, efficient solutions.
-  </p>
-  <p>
-    My interests include combinatorics, graph algorithms, and theoretical computer science.
-    I'm drawn to problems where thinking precisely is half the work.
-  </p>
-
-  <!-- Papers / Notes -->
   <div class="section">
-    <div class="section-label">Papers &amp; Notes</div>
+    <div class="section-label">Some nice results</div>
 
     <div class="entry">
       <div class="entry-title">
-        <a href="pdfs/paper-title.pdf" target="_blank">Paper or Note Title</a>
-        <a class="tag" href="pdfs/paper-title.pdf" target="_blank">PDF</a>
+        <a href="#" class="pdf-link" data-src="pdfs/obl_submodular.pdf" data-title="Oblivious algorithms for submodular maximization">
+          Oblivious algorithms for submodular maximization
+        </a>
+        <button class="tag pdf-link" data-src="pdfs/obl_submodular.pdf" data-title="Oblivious algorithms for submodular maximization">PDF</button>
       </div>
-      <div class="entry-meta">Course / Venue &middot; 2025</div>
-      <div class="entry-desc">Brief description of what this covers and why it's interesting.</div>
     </div>
-
-    <div class="entry">
-      <div class="entry-title">
-        <a href="pdfs/another-paper.pdf" target="_blank">Another Paper or Project</a>
-        <a class="tag" href="pdfs/another-paper.pdf" target="_blank">PDF</a>
-      </div>
-      <div class="entry-meta">Course / Venue &middot; 2024</div>
-      <div class="entry-desc">Brief description of what this covers and why it's interesting.</div>
-    </div>
-
   </div>
 
-  <!-- Contact -->
   <div class="section">
     <div class="section-label">Contact</div>
     <div class="contact-links">
       <a href="mailto:destin.niyomufasha.26@dartmouth.edu">Email</a>
       <a href="https://www.linkedin.com/in/destin-niyomufasha" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="pdfs/resume.pdf" target="_blank">Resume</a>
+      <a href="#" class="pdf-link" data-src="pdfs/resume.pdf" data-title="Resume — Destin Niyomufasha">Resume</a>
     </div>
   </div>
+
+  <!-- PDF Modal -->
+  <div class="pdf-overlay" id="pdfOverlay">
+    <div class="pdf-modal">
+      <div class="pdf-toolbar">
+        <span class="pdf-toolbar-title" id="pdfTitle"></span>
+        <div class="pdf-toolbar-actions">
+          <a class="pdf-btn" id="pdfDownload" download>&#8595; Download</a>
+          <button class="pdf-btn close-btn" id="pdfClose" title="Close">&times;</button>
+        </div>
+      </div>
+      <iframe class="pdf-frame" id="pdfFrame" title="PDF preview"></iframe>
+    </div>
+  </div>
+
+  <script>
+    const overlay  = document.getElementById('pdfOverlay');
+    const frame    = document.getElementById('pdfFrame');
+    const title    = document.getElementById('pdfTitle');
+    const download = document.getElementById('pdfDownload');
+
+    function openPDF(src, label) {
+      frame.src    = src;
+      title.textContent = label;
+      download.href = src;
+      download.setAttribute('download', label);
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePDF() {
+      overlay.classList.remove('open');
+      frame.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.pdf-link').forEach(el => {
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        openPDF(el.dataset.src, el.dataset.title);
+      });
+    });
+
+    document.getElementById('pdfClose').addEventListener('click', closePDF);
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closePDF();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closePDF();
+    });
+  </script>
 
 </body>
 </html>
