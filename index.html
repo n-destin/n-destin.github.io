@@ -92,23 +92,28 @@
       position: fixed;
       top: 0;
       right: 0;
-      width: min(580px, 58vw);
+      width: min(900px, 70vw);
       height: 100vh;
       background: #fafafa;
       border-left: 1px solid #e8e8e8;
       display: flex;
       flex-direction: column;
       transform: translateX(100%);
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 50;
       box-shadow: -4px 0 24px rgba(0,0,0,0.07);
     }
 
     .pdf-panel.open { transform: translateX(0); }
+    .pdf-panel.expanded { width: 94vw; }
 
     /* Push page left when panel opens */
     body.panel-open .page {
-      transform: translateX(calc(-1 * min(290px, 29vw)));
+      transform: translateX(calc(-1 * min(450px, 35vw)));
+    }
+    body.panel-expanded .page {
+      transform: translateX(calc(-1 * min(560px, 47vw)));
     }
 
     .pdf-toolbar {
@@ -170,8 +175,7 @@
   <div class="page">
     <h1>Destin Niyomufasha</h1>
 
-    <p>Welcome! I recently graduated from Dartmouth, and I'm a software engineer at google working on chrome agents. I like algorithms and math. Feel free to check out my work below </p>
-
+    <p>Welcome! I'm a software engineer at google, and a recernt graduate from Dartmouth College. I like algorithms and math, and problem solving in general. Feel free to check out my work below</p>
     <div class="section">
       <div class="section-label">Some nice theory results.</div>
 
@@ -200,6 +204,7 @@
       <span class="pdf-toolbar-title" id="pdfTitle"></span>
       <div class="pdf-toolbar-actions">
         <a class="pdf-action-btn" id="pdfDownload" download>↓ Download</a>
+        <button class="pdf-action-btn" id="pdfExpand" title="Expand">⤢</button>
         <button class="pdf-action-btn close" id="pdfClose" title="Close">✕</button>
       </div>
     </div>
@@ -211,6 +216,7 @@
     const frame    = document.getElementById('pdfFrame');
     const titleEl  = document.getElementById('pdfTitle');
     const dlBtn    = document.getElementById('pdfDownload');
+    const expandBtn = document.getElementById('pdfExpand');
 
     function openPDF(src, label) {
       frame.src = src;
@@ -222,9 +228,17 @@
     }
 
     function closePDF() {
-      panel.classList.remove('open');
-      document.body.classList.remove('panel-open');
+      panel.classList.remove('open', 'expanded');
+      document.body.classList.remove('panel-open', 'panel-expanded');
       frame.src = '';
+      expandBtn.textContent = '⤢';
+    }
+
+    function toggleExpand() {
+      const isExpanded = panel.classList.toggle('expanded');
+      document.body.classList.toggle('panel-expanded', isExpanded);
+      document.body.classList.toggle('panel-open', true);
+      expandBtn.textContent = isExpanded ? '⤡' : '⤢';
     }
 
     document.querySelectorAll('.pdf-link').forEach(el => {
@@ -240,6 +254,7 @@
       });
     });
 
+    expandBtn.addEventListener('click', toggleExpand);
     document.getElementById('pdfClose').addEventListener('click', closePDF);
 
     document.addEventListener('keydown', e => {
